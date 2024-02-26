@@ -5,11 +5,27 @@ void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Nicky Alief",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        backgroundColor: Colors.grey[200], // Background color: light grey
+      ),
       home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Konversi Suhu',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // Text color: black
+            ),
+          ),
+          backgroundColor: Colors.grey[200], // Background color: light grey
+          iconTheme: IconThemeData(color: Colors.black), // Icon color: black
+        ),
         body: const Center(
           child: MyStatefulWidget(),
         ),
@@ -37,6 +53,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final TextEditingController input = TextEditingController(
     text: '',
   );
+
   void hitung() {
     if (_chosenValue == "Celcius") {
       c = double.parse(input.text);
@@ -79,171 +96,104 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Konversi Suhu'), actions: <Widget>[]),
-      body: Container(
-        child: Container(
-            padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
-            child: Column(
-              children: [
-                Row(
-                  children: <Widget>[
-                    Container(
-                      width: 150,
-                      child: TextField(
-                        decoration: new InputDecoration(
-                            labelText: "Suhu", hintText: "Masukan Suhu"),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))
-                        ],
-                        controller: input, // Only numbers can be entered
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 20, left: 24),
-                      width: 120,
-                      child: DropdownButton<String>(
-                        value: _chosenValue,
-                        //elevation: 5,
-                        style: TextStyle(color: Colors.black),
-
-                        items: <String>[
-                          'Celcius',
-                          'Farenheit',
-                          'Kelvin',
-                          'Reamur',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        hint: Text(
-                          "Pilih",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 5,
-                          ),
-                        ),
-                        onChanged: (String? value) {
-                          setState(() {
-                            _chosenValue = value!;
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      child: Text('Konversi Suhu'),
-                      onPressed: () {
-                        hitung();
-                      },
-                    ),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 20)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Celcius: ",
-                    ),
-                    Padding(padding: EdgeInsets.only(right: 30)),
-                    Container(
-                      width: 200,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: celciust,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "celcius",
-                            hintText: '',
-                            hintStyle: TextStyle(
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Reamur: ",
-                    ),
-                    Padding(padding: EdgeInsets.only(right: 30)),
-                    Container(
-                      width: 200,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: reamurt,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Reamur",
-                            hintText: '',
-                            hintStyle: TextStyle(
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Farenheit: ",
-                    ),
-                    Padding(padding: EdgeInsets.only(right: 21)),
-                    Container(
-                      width: 200,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: farenheitt,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Farenheit",
-                            hintText: '',
-                            hintStyle: TextStyle(
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Kelvin: ",
-                    ),
-                    Padding(padding: EdgeInsets.only(right: 40)),
-                    Container(
-                      width: 200,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: kelvint,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Kelvin",
-                            hintText: '',
-                            hintStyle: TextStyle(
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            )),
+    return Container(
+      color: Colors.grey[200], // Background color: light grey
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              labelText: "Suhu",
+              hintText: "Masukkan Suhu",
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Colors.blue), // Blue border when focused
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Colors.blue), // Blue border when not focused
+              ),
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))
+            ],
+            style: TextStyle(color: Colors.black), // Text color: black
+            controller: input,
+          ),
+          DropdownButton<String>(
+            value: _chosenValue,
+            items: <String>[
+              'Celcius',
+              'Farenheit',
+              'Kelvin',
+              'Reamur',
+            ].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value,
+                    style: TextStyle(color: Colors.black)), // Text color: black
+              );
+            }).toList(),
+            onChanged: (String? value) {
+              setState(() {
+                _chosenValue = value!;
+              });
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              hitung();
+            },
+            child: Text(
+              'Konversi Suhu',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white, // Text color: white
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.blue, // Button color: blue
+            ),
+          ),
+          Text("Celcius: "),
+          TextField(
+            controller: celciust,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Celcius",
+            ),
+            style: TextStyle(color: Colors.black), // Text color: black
+          ),
+          Text("Reamur: "),
+          TextField(
+            controller: reamurt,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Reamur",
+            ),
+            style: TextStyle(color: Colors.black), // Text color: black
+          ),
+          Text("Farenheit: "),
+          TextField(
+            controller: farenheitt,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Farenheit",
+            ),
+            style: TextStyle(color: Colors.black), // Text color: black
+          ),
+          Text("Kelvin: "),
+          TextField(
+            controller: kelvint,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Kelvin",
+            ),
+            style: TextStyle(color: Colors.black), // Text color: black
+          ),
+        ],
       ),
     );
   }
